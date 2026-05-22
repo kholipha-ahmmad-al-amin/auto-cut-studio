@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auto Cut Studio</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" data-i18n="heroEyebrow">Local video automation</p>
+          <h1>Auto Cut Studio</h1>
+          <p class="hero-copy" data-i18n="heroCopy">Cut silence, clean voice, and process videos locally with a focused production workflow.</p>
+        </div>
+        <div class="top-actions">
+          <label class="language-toggle" aria-label="Language switch">
+            <input id="language-toggle" type="checkbox">
+            <span class="toggle-track">
+              <span class="toggle-thumb"></span>
+              <span class="toggle-option option-en">EN</span>
+              <span class="toggle-option option-bn">বাংলা</span>
+            </span>
+          </label>
+          <div class="status-pill" id="engine-status">Ready</div>
+        </div>
+      </header>
+
+      <section class="panel upload-panel">
+        <div class="drop-zone" id="drop-zone">
+          <input id="file-input" type="file" name="files" multiple accept="video/*,audio/*">
+          <div class="drop-copy">
+            <strong data-i18n="dropTitle">Drop videos here</strong>
+            <span data-i18n="dropText">or click to choose files from your computer</span>
+          </div>
+        </div>
+        <div class="file-list" id="file-list">
+          <p data-i18n="emptyFiles">No files selected yet.</p>
+        </div>
+      </section>
+
+      <section class="mode-grid" aria-label="Edit modes">
+        {% for mode in modes %}
+        <label class="mode-card {% if loop.first %}selected{% endif %}" data-mode-key="{{ mode.key }}">
+          <input type="radio" name="mode" value="{{ mode.key }}" {% if loop.first %}checked{% endif %}>
+          <span data-mode-label>{{ mode.label }}</span>
+          <small data-mode-description>{{ mode.description }}</small>
+        </label>
+        {% endfor %}
+      </section>
+
+      <section class="actions-row">
+        <button class="primary-button" id="start-button" type="button" data-i18n="startButton">Start processing</button>
+        <button class="secondary-button" id="clear-button" type="button" data-i18n="clearButton">Clear files</button>
+      </section>
+
+      <section class="panel progress-panel">
+        <div class="progress-head">
+          <div>
+            <p class="eyebrow" data-i18n="currentJob">Current job</p>
+            <h2 id="job-title">No job running</h2>
+          </div>
+          <span id="job-counter">0 / 0</span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="results" id="results"></div>
+      </section>
+
+      <section class="credit-panel">
+        <div>
+          <p class="eyebrow" data-i18n="creditEyebrow">Creator and credit</p>
+          <h2 data-i18n="creditName">Kholipha Ahmmad Al-Amin</h2>
+          <p data-i18n="creditBio">Software Engineer & AI Specialist, Founder & CEO at EquiSaaS BD, Principal Consultant at AR IT Consultancy, and Full-Stack SaaS Product Builder from Dhaka, Bangladesh.</p>
+        </div>
+        <a class="portfolio-link" href="https://kholipha-ahmmad-al-amin.equisaas-bd.com/" target="_blank" rel="noreferrer" data-i18n="portfolioLink">Portfolio</a>
+      </section>
+    </section>
+
+    <aside class="console">
+      <div class="console-head">
+        <p class="eyebrow" data-i18n="liveLog">Live log</p>
+        <button class="text-button" id="copy-log" type="button" data-i18n="copyButton">Copy</button>
+      </div>
+      <pre id="log-output">Waiting for a job.</pre>
+    </aside>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
